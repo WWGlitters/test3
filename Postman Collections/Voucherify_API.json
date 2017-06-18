@@ -1,0 +1,4315 @@
+{
+  "variables": [],
+  "info": {
+    "name": "Voucherify API",
+    "_postman_id": "70b5a037-75ea-826d-aa01-b15709db6a89",
+    "description": "",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "_postman_id": "5604bb75-a1f3-1d73-ef1e-4bb5db63a01b",
+      "name": "Campaigns",
+      "description": "",
+      "item": [
+        {
+          "_postman_id": "5781039f-29b3-9a9f-9815-bb06e6bc2b4b",
+          "name": "Create campaign",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Type is DISCOUNT VOUCHER\"] = jsonData.voucher.type === \"DISCOUNT_VOUCHER\";"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/campaigns",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"test campaign {{$timestamp}}\",\n    \"start_date\": \"2016-10-26T00:00:00Z\",\n    \"expiration_date\": \"2016-12-26T00:00:00Z\",\n    \"vouchers_count\": 100,\n    \"voucher\": {\n        \"type\": \"DISCOUNT_VOUCHER\",\n        \"discount\": {\n            \"percent_off\": \"10.0\",\n            \"type\": \"PERCENT\"\n        },\n         \"redemption\": {\n          \"quantity\": 1\n      },\n        \"code_config\": {\n            \"pattern\": \"TC6-PROMO-#######\"\n        }\n    },\n    \"metadata\": {\n      \"test\": true\n    }\n}"
+            },
+            "description": "Create campaign with one voucher without redemption limit"
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "f6ebd316-a61f-5ceb-3514-f15faf0486dd",
+          "name": "Get campaign",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Type is DISCOUNT VOUCHER\"] = jsonData.voucher_type === \"DISCOUNT_VOUCHER\";"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/campaigns/test campaign",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"TEST-API-FOR-CAMPAIGN-6\",\n    \"vouchers_count\":2,\n    \"voucher\": {\n        \"type\": \"DISCOUNT_VOUCHER\",\n        \"discount\": {\n            \"percent_off\": \"10.0\",\n            \"type\": \"PERCENT\"\n        },\n        \"redemption\": {\n            \"quantity\": 5 \n        },\n        \"code_config\": {\n            \"pattern\": \"TC6-PROMO-#######\"\n        }\n    },\n    \"metadata\": {\n      \"test\": true\n    }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "236113ea-dd9a-7793-3aca-3317f10d47a3",
+          "name": "Create gift card campaign ",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Type is GIFT VOUCHER\"] = jsonData.voucher.type === \"GIFT_VOUCHER\";"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/campaigns",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"gitf_card_{{$timestamp}}\",\n    \"vouchers_count\": 50,\n    \"voucher\": {\n        \"type\": \"GIFT_VOUCHER\",\n        \"gift\": {\n          \"amount\": 10000\n        },\n        \"redemption\": {\n          \"quantity\": null\n        }\n    }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "_postman_id": "a0321673-1369-601f-5559-7f6b00a04744",
+      "name": "Customers",
+      "description": "",
+      "item": [
+        {
+          "_postman_id": "dad20655-b2fd-ecaa-5d8e-81558abe2427",
+          "name": "Create - src id",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Customer id is defined\"] = _.isUndefined(jsonData.id) === false;",
+                  "tests[\"Source id is src_id\"] = jsonData.source_id === 'src_id';",
+                  "postman.setEnvironmentVariable(\"customerId\", jsonData.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/customers",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\" : \"Jan Kowalski\",\n    \"email\" : \"jan@kowalski.pl\",\n    \"description\" : \"{{$timestamp}}\",\n    \"source_id\": \"src_id\",\n    \"phone\": \"+48 123456789\"\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "2a7c2c31-4333-4bdd-855d-a80bf48e632d",
+          "name": "Get",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/customers/{{customerId}}",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\" : \"Jan Kowalski\",\n    \"email\" : \"jan{{$timestamp}}@kowalski.pl\"\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "25738a71-6858-a046-062a-4bcec485d3e8",
+          "name": "Update",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Customer id is defined\"] = _.isUndefined(jsonData.id) === false;",
+                  "tests[\"Customer email is updated\"] = jsonData.email === 'john@doe.com';",
+                  "postman.clearEnvironmentVariable(\"customerId\");"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/customers/{{customerId}}",
+            "method": "PUT",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john@doe.com\"\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "6ce3920a-346d-5849-5c81-6510d25eb8ad",
+          "name": "Create",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Customer id is defined\"] = _.isUndefined(jsonData.id) === false;",
+                  "postman.setEnvironmentVariable(\"createdCustomerId\", jsonData.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/customers",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\" : \"Jan Kowalski\",\n    \"email\" : \"jan{{$timestamp}}@kowalski.pl\"\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "f77aea53-da6f-bf21-dec6-f5b0680f5b26",
+          "name": "Delete",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "postman.clearEnvironmentVariable(\"createdCustomerId\");",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/customers/{{createdCustomerId}}",
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\" : \"Jan Kowalski\",\n    \"email\" : \"jan{{$timestamp}}@kowalski.pl\"\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "_postman_id": "1606f0d9-07b0-ce56-9394-49c6ab2d3f29",
+      "name": "Enable/disable",
+      "description": "",
+      "item": [
+        {
+          "_postman_id": "795479d7-a3df-8b7a-66e8-1d435c5ab09e",
+          "name": "Enable",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/test-activity/enable",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "0b7d1894-0b18-2913-cdaa-0c2e4f65502c",
+          "name": "Disable",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/test-activity/disable",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"campaign\": \"100k-test\",\n    \"channel\": \"MailChimp\"\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "_postman_id": "d9fc8bd4-a84f-41fa-caf8-c4a086a877e1",
+      "name": "Export",
+      "description": "",
+      "item": [
+        {
+          "_postman_id": "b341c8ac-0233-0c65-6da3-3cea84e57c69",
+          "name": "Create Export",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Export ID is defined\"] = _.isUndefined(jsonData.id) === false;",
+                  "postman.setEnvironmentVariable(\"exportId\", jsonData.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/exports",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"exported_object\": \"voucher\",\n  \"parameters\" : {\n    \"fields\": [\"code\", \"voucher_type\"],\n    \"filter\" : {\n      \"categories\" : {\n        \"conditions\" : {\n          \"$in\" : [\"postman\"]\n        }\n      }\n    }\n  }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "64f79d37-4e20-9a74-41ff-ade8dcc89537",
+          "name": "Get Export",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/exports/{{exportId}}",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n \"exported_object\": \"voucher\",\n  \"parameters\" : {\n    \"filter\" : {\n      \"categories\" : {\n        \"conditions\" : {\n          \"$in\" : [\"postman\"]\n        }\n      }\n    }\n  }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "059d43fb-b23a-fe0f-9210-00ff5b0a6079",
+          "name": "Delete Export",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "postman.clearEnvironmentVariable(\"exportId\");"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/exports/{{exportId}}",
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "_postman_id": "f16bb084-2da9-7031-91a2-b336ae29e76c",
+      "name": "Import",
+      "description": "",
+      "item": [
+        {
+          "_postman_id": "52941906-9849-6490-4986-626464821790",
+          "name": "Import vouchers",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 202\"] = responseCode.code === 202;",
+                  "",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/import",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "[\n    {\n        \"code\": \"CODE1_{{$timestamp}}\",\n        \"category\": \"postman-import\",\n        \"type\": \"DISCOUNT_VOUCHER\",\n        \"discount\": {\n            \"amount_off\": 3000,\n            \"type\": \"AMOUNT\"\n        },\n        \"start_date\": \"2015-12-01T23:00:00Z\",\n        \"expiration_date\": \"2015-12-19T23:00:00Z\",\n        \"redemption\": {\n            \"quantity\": 1.0\n        },\n        \"metadata\": {\"unit\": \"EUR\"},\n        \"additional_info\": \"secret-code1\"\n    },\n    {\n        \"code\": \"CODE2_{{$timestamp}}\",\n        \"type\": \"DISCOUNT_VOUCHER\",\n        \"category\" : \"postman-import\",\n        \"discount\": {\n            \"percent_off\": 30,\n            \"type\": \"PERCENT\"\n        },\n        \"start_date\": \"2015-12-10T23:00:00Z\",\n        \"expiration_date\": \"2015-12-31T23:00:00Z\",\n        \"redemption\": {\n            \"quantity\": 1.0\n        },\n        \"metadata\": {\"unit\": \"EUR\"},\n        \"additional_info\": \"secret-code2\"\n    }\n]"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "4e0e4e55-6448-06c7-d4c6-c78c886f78b1",
+          "name": "Import vouchers - duplicate",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 400\"] = responseCode.code === 400;",
+                  "",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/import",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "[\n    {\n        \"code\": \"test\",\n        \"category\": \"postman\",\n        \"type\": \"DISCOUNT_VOUCHER\",\n        \"discount\": {\n            \"amount_off\": 3000,\n            \"type\": \"AMOUNT\"\n        },\n        \"start_date\": \"2015-12-01T23:00:00Z\",\n        \"expiration_date\": \"2015-12-19T23:00:00Z\",\n        \"redemption\": {\n            \"quantity\": 1.0\n        },\n        \"metadata\": {\"unit\": \"EUR\"},\n        \"additional_info\": \"secret-code1\"\n    }\n]"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "1437d936-9947-2eb9-6ba3-290cca46cdea",
+          "name": "Import vouchers - to campaign",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 202\"] = responseCode.code === 202;",
+                  "",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/campaigns/postman-import/import",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "[\n    {\n        \"code\": \"CODE_{{$timestamp}}\",\n        \"redemption\": {\n            \"quantity\": 1.0\n        },\n        \"metadata\": {\"unit\": \"EUR\"},\n        \"additional_info\": \"secret-code1\"\n    }\n]"
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "_postman_id": "9e0f4f33-abdb-30f7-7813-32389c6887c8",
+      "name": "Products",
+      "description": "",
+      "item": [
+        {
+          "_postman_id": "01427842-a3c8-39f9-6057-4ac12159929d",
+          "name": "Create",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Product id is defined\"] = _.isUndefined(jsonData.id) === false;",
+                  "tests[\"Product type is 'product'\"] = jsonData.object === \"product\";",
+                  "postman.setEnvironmentVariable(\"createdProductId\", jsonData.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/products",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\" : \"Apple iPhone 7\",\n    \"source_id\" : \"internal_crm_id_{{$timestamp}}\",\n    \"attributes\": [ \"color\", \"memory\" ],\n    \"metadata\": {\n      \"test\": true\n    }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "c7d87894-f88c-2c0c-e3d6-e73740f68761",
+          "name": "Update product",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests['Metadata modified'] = jsonData.metadata.test === \"false\";"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/products/{{createdProductId}}",
+            "method": "PUT",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \n  \"name\" : \"Apple iPhone 8\",\n  \"metadata\" : {\n    \"test\" : \"false\"\n  }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "b8ec9876-2900-6e9a-5b6b-a5bc9c68a39c",
+          "name": "Add SKU",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"SKU id is defined\"] = _.isUndefined(jsonData.id) === false;",
+                  "tests[\"SKU type is 'sku'\"] = jsonData.object === \"sku\";",
+                  "postman.setEnvironmentVariable(\"createdSKUId\", jsonData.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/products/{{createdProductId}}/skus",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"sku\" : \"APPLE_IPHONE_7\",\n    \"source_id\" : \"internal_erp_sku_id_{{$timestamp}}\",\n    \"currency\": \"USD\",\n    \"price\": 70000,\n    \"attributes\": {\n      \"color\": \"black\",\n      \"memory\": \"32\"\n    }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "efba07b8-4ba6-835d-0287-bcb868f9e699",
+          "name": "Get product",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"SKUs quantity is correct\"] = jsonData.skus.data.length === jsonData.skus.total;",
+                  "tests[\"SKUs quantity is correct\"] = jsonData.skus.total === 1;"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/products/{{createdProductId}}",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "6047ddbe-8f2d-cfbc-bc19-9a78267a2a22",
+          "name": "List products",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Products quantity is correct\"] = jsonData.products.length === jsonData.total;"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/products",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "d17e96c0-66ae-55b8-9076-2ae02b681b29",
+          "name": "Get SKU",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"SKU id is correct\"] = jsonData.id === postman.getEnvironmentVariable(\"createdSKUId\");"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/products/{{createdProductId}}/skus/{{createdSKUId}}",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "90044df7-e5d2-744d-0da1-833481e572a0",
+          "name": "Update SKU",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests['Attribute has been modified'] = jsonData.attributes.memory === 16;"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/products/{{createdProductId}}/skus/{{createdSKUId}}",
+            "method": "PUT",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"price\": 50000,\n    \"attributes\": {\n      \"memory\": 16\n    }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "761d9687-c1ed-a9db-d8e9-becec76147a8",
+          "name": "List SKUs",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "",
+                  "tests[`SKUs count is correct`] = jsonData.total === jsonData.skus.length;",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/products/{{createdProductId}}/skus",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "e6f5dae4-aa4d-1eb9-c5d2-cca0db76c519",
+          "name": "Delete SKU",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "",
+                  "postman.clearEnvironmentVariable('createdSKUId');"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/products/{{createdProductId}}/skus/{{createdSKUId}}",
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "5752044e-8cb3-f456-4001-2242a77e642e",
+          "name": "Delete product",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "postman.clearEnvironmentVariable('createdProductId');"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/products/{{createdProductId}}",
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \n}"
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "_postman_id": "2657fb64-e6a0-f2ae-41af-16e966a7e1db",
+      "name": "Publish",
+      "description": "",
+      "item": [
+        {
+          "_postman_id": "7d0f513f-5d86-f436-d87d-989d62874742",
+          "name": "Publish",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Publish count is positive\"] = jsonData.publish.count > 0;",
+                  "tests[\"Publish channel is MailChimp\"] = jsonData.publish.entries[0].channel === 'MailChimp';",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/publish",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"campaign\": \"100k-test\",\n    \"channel\": \"MailChimp\"\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "3afad032-225b-7105-8e4e-f6bcba6891aa",
+          "name": "Publish bad request",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 400\"] = responseCode.code === 400;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/publish",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"campaign\": \"postman-paging\",\n    \"channel\": \"MailChimp\"\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "220f9c44-2b4e-c47e-1a1a-2c846e5b2c96",
+          "name": "List Publications",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/publications",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "ad77b1aa-0239-b9dc-4afb-15cda21c5ab0",
+          "name": "List Publications filters",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/publications?filters[campaign][conditions][$is][0]=StaticOne&filters[Result][conditions][$is][1]=FAILURE",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "_postman_id": "c1cd8042-3108-61e3-3a6e-cd773dd69115",
+      "name": "Redeem",
+      "description": "",
+      "item": [
+        {
+          "_postman_id": "f48ae193-712d-45a1-06c3-08441b083def",
+          "name": "Redeem",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Redemption id is set\"] = _.isNull(jsonData.id) === false;",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/test/redemption",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "d87c5e33-fbfb-6c9e-a2aa-1e2231794a4e",
+          "name": "Redeem - not found",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 404\"] = responseCode.code === 404;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Redemption id is undefined\"] = _.isUndefined(jsonData.id) === true;"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/NotFound123/redemption",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "2382f000-db5d-cd79-e382-2b0d813902a9",
+          "name": "Redeem - expired",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 400\"] = responseCode.code === 400;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Redemption id is undefined\"] = _.isUndefined(jsonData.id) === true;"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/invalid/redemption",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "b7279494-838a-1b58-4b4b-fad9876026fc",
+          "name": "Redeem - client side",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Redemption id is set\"] = _.isNull(jsonData.id) === false;"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "https://api.voucherify.io/client/v1/redeem?code=test",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Client-Application-Id",
+                "value": "011240bf-d5fc-4ef1-9e82-11eb68c43bf5",
+                "description": ""
+              },
+              {
+                "key": "X-Client-Token",
+                "value": "9e2230c5-71fb-460a-91c6-fbee64707a20",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "Origin",
+                "value": "origin",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "7135ad07-5b52-1d12-1517-2dde45508370",
+          "name": "Redeem - order details",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Redemption id is set\"] = _.isNull(jsonData.id) === false;",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/LdprQtRL/redemption",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"order\": {\n        \"items\": [\n          { \"sku_id\": \"sku_dSbRQfbyUMyHnt\", \"quantity\": \"1\" },\n            { \"sku_id\": \"sku_0KtP4rvwEECQ2U\", \"quantity\": \"1\" }\n        ]\n    }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "_postman_id": "46f09be1-f81e-8256-8cf9-e73fa4c75e2d",
+      "name": "Redemptions",
+      "description": "",
+      "item": [
+        {
+          "_postman_id": "4b58c448-6cdc-d582-e11d-95add67a09d2",
+          "name": "Get voucher's redemptions",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Quantity is correct\"] = jsonData.redemption_entries.length === jsonData.total;"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/test/redemption",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "63094953-0c51-bd33-22fc-bf57763f39f2",
+          "name": "List redemptions - success",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Number of redemptions is <= 100\"] = jsonData.redemptions.length <= 100;",
+                  "_.forEach(jsonData.redemptions, function(redemption){",
+                  "    tests[`Redemption status for ${redemption.redemption_id} is SUCCESS`] = redemption.result === 'SUCCESS';",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/redemptions?result=SUCCESS",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "_postman_id": "47c28acc-aa6e-40db-7ad8-caf0865d2dfd",
+      "name": "Segments",
+      "description": "",
+      "item": [
+        {
+          "_postman_id": "65db9449-444e-90a4-b356-88ae1f230a11",
+          "name": "Create segment",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Segment type is static\"] = jsonData.type === \"static\";",
+                  "postman.setEnvironmentVariable(\"createdSegmentId\", jsonData.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/segments",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"test segment2\",\n  \"customers\": [\"cust_EkqCdCA7JyIDlFBvkOMTnceJ\"],\n  \"type\": \"static\"\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "714fa2e5-bcfc-0eb4-0631-e0934d1ea898",
+          "name": "Get segment",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Segment id is defined\"] = _.isUndefined(jsonData.id) === false;"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/segments/{{createdSegmentId}}",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"test segment2\",\n  \"customers\": [\"cust_EkqCdCA7JyIDlFBvkOMTnceJ\"],\n  \"type\": \"static\"\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "4dd2f055-7f09-cfc4-69f3-32b9b8a96096",
+          "name": "Delete segment",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "postman.clearEnvironmentVariable('createdSegmentId');"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/segments/{{createdSegmentId}}",
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "_postman_id": "c55b8ae7-9c1c-032c-080d-ec54515daf42",
+      "name": "Standalone",
+      "description": "",
+      "item": [
+        {
+          "_postman_id": "46cd6ba1-57a9-ac96-74bd-66051c31b086",
+          "name": "Create voucher without code",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Type is DISCOUNT VOUCHER\"] = jsonData.type === \"DISCOUNT_VOUCHER\";",
+                  "tests[\"Code is not empty\"] = _.isEmpty(jsonData.code) !== true; ",
+                  "postman.setEnvironmentVariable(\"generatedCode\", jsonData.code);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"type\": \"DISCOUNT_VOUCHER\",\n    \"discount\": {\n        \"percent_off\": \"10.0\",\n        \"type\": \"PERCENT\"\n    },\n    \"redemption\": {\n        \"quantity\": \"1\" \n    },\n    \"category\": \"postman\"\n}"
+            },
+            "description": "Create discount voucher without code"
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "04029035-0076-9368-d117-9f6045210e31",
+          "name": "Create voucher with a given code",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Type is DISCOUNT VOUCHER\"] = jsonData.type === \"DISCOUNT_VOUCHER\";",
+                  "tests[\"Code is not empty\"] = jsonData.code == request.url.substr(request.url.lastIndexOf('/') + 1); ",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/{{$timestamp}}",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"type\": \"DISCOUNT_VOUCHER\",\n    \"discount\": {\n        \"percent_off\": \"10.0\",\n        \"type\": \"PERCENT\"\n    },\n    \"redemption\": {\n        \"quantity\": \"1\" \n    },\n    \"category\": \"postman\"\n}"
+            },
+            "description": "Create discount voucher with a given code"
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "caf5f957-b756-332e-8ef8-7595788ae47d",
+          "name": "Update voucher",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Metadata got updated\"] = jsonData.metadata['update_time'] === JSON.parse(request.data).metadata.update_time;",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/test",
+            "method": "PUT",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"metadata\": {\n        \"update_time\": \"{{$timestamp}}\" \n    },\n    \"category\": \"postman\"\n}"
+            },
+            "description": "Update voucher metadata"
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "e0a2d636-d50f-ceb3-a537-9739905033f9",
+          "name": "Get voucher - existing",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Category is postman\"] = jsonData.category === 'postman';",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/test",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"metadata\": {\n        \"update_time\": \"{{$timestamp}}\" \n    }\n}"
+            },
+            "description": "Get existing voucher"
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "d4107f15-f860-aa08-c447-12ab6c282a92",
+          "name": "Get voucher - non-existent",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 404\"] = responseCode.code === 404",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/notfound123",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"metadata\": {\n        \"update_time\": \"{{$timestamp}}\" \n    }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "4b7222b9-1f61-1aab-2384-d100b283cbc2",
+          "name": "List vouchers",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "_.forEach(jsonData, function(voucher) { ",
+                  "    tests[`Category is for voucher: ${voucher.code} is postman`] = voucher.category === 'postman';",
+                  "});",
+                  "tests[\"Number of vouchers is less 3\"] = jsonData.length <= 3; "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers?category=postman&limit=3",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"metadata\": {\n        \"update_time\": \"{{$timestamp}}\" \n    }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "437e2b2d-f1dc-88dc-bc49-3892af0eb353",
+          "name": "List vouchers - paging",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"9/10 code is LEdM2MEK\"] = jsonData[0].code === \"LEdM2MEK\";",
+                  "tests[\"10/10 code is s21dBglt\"] = jsonData[1].code === \"s21dBglt\";"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers?campaign=postman-paging&limit=2&skip=8",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"metadata\": {\n        \"update_time\": \"{{$timestamp}}\" \n    }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "1f88a86d-f1b4-7621-0655-cd09b008875a",
+          "name": "Delete voucher",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "postman.clearEnvironmentVariable(\"{{generatedCode}}\");",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/{{generatedCode}}",
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "_postman_id": "f2747f8e-a917-0f20-5df8-c057edbe2b37",
+      "name": "TC1 - Redemption limit 1",
+      "description": "create > validate > redeem > redemption history",
+      "item": [
+        {
+          "_postman_id": "1d6090ec-1e08-696d-5177-2126e07f9855",
+          "name": "TC1 - Create voucher without code",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Type is DISCOUNT VOUCHER\"] = jsonData.type === \"DISCOUNT_VOUCHER\";",
+                  "tests[\"Code is not empty\"] = _.isEmpty(jsonData.code) !== true;",
+                  "postman.setEnvironmentVariable(\"TC1-code\", jsonData.code);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"type\": \"DISCOUNT_VOUCHER\",\n    \"discount\": {\n        \"percent_off\": \"10.0\",\n        \"type\": \"PERCENT\"\n    },\n    \"redemption\": {\n        \"quantity\": \"1\" \n    },\n    \"category\": \"postman\"\n}"
+            },
+            "description": "Create discount voucher without code"
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "dc2aedb3-369f-1e81-48ee-10564b977a21",
+          "name": "TC1 - Validate",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Code is valid\"] = jsonData.valid === true;"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/{{TC1-code}}/validate",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "e8a199a8-cb29-f521-406f-0e3e3eb8e4a2",
+          "name": "TC1 - Redeem",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Redemption id is set\"] = _.isNull(jsonData.id) === false;",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/{{TC1-code}}/redemption",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "5c717f2b-5774-d2de-65d1-68d04485311d",
+          "name": "TC1 - Second redeem",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 400\"] = responseCode.code === 400;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Quantity exceeded\"] = jsonData.message === 'quantity exceeded';",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/{{TC1-code}}/redemption",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "description": "Should fail because the redemption limit is set to 1"
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "f26bbb27-11d7-002d-dcbd-98254d81f52f",
+          "name": "TC1 - Get  redemptions",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Quantity is correct\"] = jsonData.quantity === 1;",
+                  "postman.clearEnvironmentVariable('TC1-code');"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/{{TC1-code}}/redemption",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "_postman_id": "2e2c68b6-aa26-b5e0-8a96-8cdb160345df",
+      "name": "TC3 - discount rules",
+      "description": "Vouchers valid only for a particular product and a customer segment. ",
+      "item": [
+        {
+          "_postman_id": "927d7ddb-e4bb-60e7-8b5c-4ad900859297",
+          "name": "TC3 - Redeem",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Redemption id is set\"] = _.isNull(jsonData.id) === false;",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/IzvHT3Ba/redemption",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"customer\": {\n         \"id\": \"cust_eIH9UtbvIfRUP9nZyBqDeMEv\"\n    },\n    \"order\": {\n        \"items\": [\n            { \"product_id\": \"prod_anJ03RZZq74z4v\", \"quantity\": \"1\" }\n        ]\n    }\n}\n"
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "_postman_id": "e93a5d08-88d6-cbaa-46a9-3e3152da48d6",
+      "name": "TC3 - e-commerce integration",
+      "description": "",
+      "item": [
+        {
+          "_postman_id": "0ff0183d-3421-0243-ac40-9310bdeffd59",
+          "name": "TC2 - Create voucher without code",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Type is DISCOUNT VOUCHER\"] = jsonData.type === \"DISCOUNT_VOUCHER\";",
+                  "tests[\"Code is not empty\"] = _.isEmpty(jsonData.code) !== true;",
+                  "postman.setEnvironmentVariable(\"TC3-code\", jsonData.code);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"type\": \"DISCOUNT_VOUCHER\",\n    \"discount\": {\n        \"percent_off\": \"10.0\",\n        \"type\": \"PERCENT\"\n    },\n    \"redemption\": {\n        \"quantity\": \"1\" \n    },\n    \"category\": \"postman-tc3\",\n    \"code_config\": {\n      \"pattern\": \"TC4-PROMO-#######\"\n    }\n}"
+            },
+            "description": "Create discount voucher without code"
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "5141bff0-741b-7713-fad6-b76dd67cae4a",
+          "name": "Validate voucher for given customer order",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Voucher is valid\"] = jsonData.valid === true;",
+                  "postman.setEnvironmentVariable(\"TC3-customer-tracking-id\", jsonData.tracking_id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/{{TC3-code}}/validate",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tracking_id\": \"shop@myshop.com\",\n  \"order\": {\n    \"amount\": 10000,\n    \"items\": []\n  }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "9068cb5e-1043-abd4-32e9-55b557da0d2e",
+          "name": "Redeem",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Redemption id is set\"] = _.isNull(jsonData.id) === false;",
+                  "tests[\"New customer was created\"] = _.isNull(jsonData.customer_id) === false;",
+                  "postman.setEnvironmentVariable(\"TC3-customer-id\", jsonData.customer_id);",
+                  "postman.setEnvironmentVariable(\"TC3-redemption-id\", jsonData.id);",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/{{TC3-code}}/redemption?tracking_id={{TC3-customer-tracking-id}}",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"order\": {\n    \"amount\": 10000,\n    \"items\": []\n  }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "cf8b6116-9ad0-6ce2-a5d6-1b6ca3cfa5cf",
+          "name": "Get  redemption",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Quantity is correct\"] = jsonData.quantity === 1;"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/{{TC3-code}}/redemption",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "104ddfcf-b4fd-009f-0342-b7f835a81b23",
+          "name": "TC2 - Get  customer",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Source id exists\"] = jsonData.source_id !== null;"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/customers/{{TC3-customer-id}}",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "3684de6f-6232-a0d5-f96d-94960624a532",
+          "name": "TC2 - Rollback redemption",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Rollback redemption id is set\"] = _.isNull(jsonData.id) === false;",
+                  "tests[\"Rollback redemption done for correct voucher\"] = _.isNull(jsonData.voucher.code) === false;",
+                  "postman.setEnvironmentVariable(\"TC3-rollback-redemption-id\", jsonData.id);",
+                  "",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/redemptions/{{TC3-redemption-id}}/rollback?tracking_id={{TC3-customer-tracking-id}}",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": "Your business logic may include a case when you need to undo a redemption. You can revert a redemption by calling this API endpoint."
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "5fec5356-5935-2ddb-7db9-4856483c6afe",
+          "name": "TC2 - Redeem 2nd time after rollback",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Redemption id is set\"] = _.isNull(jsonData.id) === false;",
+                  "tests[\"New customer was updated\"] = _.isNull(jsonData.customer_id) === false;",
+                  "postman.clearEnvironmentVariable('TC3-code');",
+                  "postman.clearEnvironmentVariable(\"TC3-tracking-id\", jsonData.id);",
+                  "postman.clearEnvironmentVariable('TC3-redemption-id');",
+                  "postman.clearEnvironmentVariable('TC3-customer-id');",
+                  "postman.clearEnvironmentVariable('TC3-rollback-redemption-id');",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/{{TC3-code}}/redemption",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer\": {\n    \"id\": \"{{TC3-customer-id}}\",\n    \"name\": \"Test Customer Postman\",\n    \"email\": \"test@myshop.com\"\n  },\n  \"order\": {\n    \"amount\": 10000,\n    \"items\": []\n  }\n}"
+            },
+            "description": "Do redemption once again and update customer data."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "_postman_id": "9fbce6c6-aab3-66a7-7f09-59a77ad9d40a",
+      "name": "TC4 - Distribution",
+      "description": "",
+      "item": [
+        {
+          "_postman_id": "4a82ef46-c7f6-e157-2292-36e6c8263fe0",
+          "name": "TC4 - Publish voucher form auto-update campaign",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Voucher code id is set\"] = _.isNull(jsonData.code) === false;",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/publish",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"campaign\": \"TEST-DEMO-1\",\n  \"customer\": {\n    \"source_id\": \"test@myshop.pl\",\n    \"name\": \"Test Publish Customer\"\n  },\n  \"metadata\": {\n    \"test\": true,\n    \"app\": \"postman\"\n  }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "34517da1-eb70-0605-107a-1c71f1937562",
+          "name": "TC4 - Get voucher",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Category is postman\"] = jsonData.category === 'postman';",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/TC4-DIS-BJ5J-iRuy-L7C-2016",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"metadata\": {\n        \"update_time\": \"{{$timestamp}}\" \n    }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "_postman_id": "3e728d4f-9236-7f52-62d6-b272d7cafb59",
+      "name": "TC5 - Rollback Redemption",
+      "description": "ATTENTION: To run properly this TC you have to set up some delay - at least 100ms.\n\nYour business logic may include a case when you need to undo a redemption. You can revert a redemption by calling this API endpoint. The operation creates a rollback entry in voucher's redemption history (redemption.redemption_entries) and gives 1 redemption back to the pool (decreases redeemed_quantity by 1).",
+      "item": [
+        {
+          "_postman_id": "8155dbbd-4043-3b83-69e6-6e0d117fbecf",
+          "name": "TC5 - Create voucher without code",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Type is DISCOUNT VOUCHER\"] = jsonData.type === \"DISCOUNT_VOUCHER\";",
+                  "tests[\"Code is not empty\"] = _.isEmpty(jsonData.code) !== true;",
+                  "postman.setEnvironmentVariable(\"TC5-code\", jsonData.code);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"type\": \"DISCOUNT_VOUCHER\",\n    \"discount\": {\n        \"percent_off\": \"10.0\",\n        \"type\": \"PERCENT\"\n    },\n    \"redemption\": {\n        \"quantity\": \"1\" \n    },\n    \"category\": \"postman-tc5\",\n    \"code_config\": {\n      \"pattern\": \"TC5-PROMO-#######\"\n    }\n}"
+            },
+            "description": "Create discount voucher without code"
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "51a319f6-05e8-a8e3-4caf-c319761effaa",
+          "name": "TC5 - Redeem",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Redemption id is set\"] = _.isNull(jsonData.id) === false;",
+                  "tests[\"New customer was created\"] = _.isNull(jsonData.customer_id) === false;",
+                  "postman.setEnvironmentVariable(\"TC5-customer-id\", jsonData.customer_id);",
+                  "postman.setEnvironmentVariable(\"TC5-redemption-id\", jsonData.id);",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/{{TC5-code}}/redemption",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer\": {\n    \"source_id\": \"test-postman@voucherify.io\",\n    \"email\": \"test-postman@voucherify.io\",\n    \"name\": \"Test Postman\",\n    \"description\": \"Test done from postman client\"\n  },\n  \"order\": {\n    \"amount\": 10000,\n    \"items\": []\n  }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "cae518ab-173c-6bdc-b60f-648af185dd02",
+          "name": "TC5 - Rollback Redemption",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Rollback Redemption id is set\"] = _.isNull(jsonData.id) === false;",
+                  "tests[\"Customer id is properly assigned\"] = jsonData.customer_id === postman.getEnvironmentVariable(\"TC5-customer-id\");"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/redemptions/{{TC5-redemption-id}}/rollback?reason=Mistake",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "07c5a146-05b4-e5d1-802e-76e3a61fa4a1",
+          "name": "TC5 - Redeem 2nd time",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Redemption id is set\"] = _.isNull(jsonData.id) === false;",
+                  "tests[\"New customer was created\"] = _.isNull(jsonData.customer_id) === false;",
+                  "postman.setEnvironmentVariable(\"TC5-customer-id\", jsonData.customer_id);",
+                  "postman.setEnvironmentVariable(\"TC5-redemption-id\", jsonData.id);",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/{{TC5-code}}/redemption",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer\": {\n    \"source_id\": \"test-postman@voucherify.io\",\n    \"email\": \"test-postman@voucherify.io\",\n    \"name\": \"Test Postman\",\n    \"description\": \"Test done from postman client\"\n  },\n  \"order\": {\n    \"amount\": 10000,\n    \"items\": []\n  }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "7d8506a2-343e-0ed8-a990-428f205a4f8f",
+          "name": "TC5 - Rollback 2nd time Redemption - pass related customer profile",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Rollback Redemption id is set\"] = _.isNull(jsonData.id) === false;",
+                  "tests[\"Customer id is properly assigned\"] = jsonData.customer_id !== postman.getEnvironmentVariable(\"TC5-customer-id\");",
+                  "",
+                  "postman.clearEnvironmentVariable('TC5-code');",
+                  "postman.clearEnvironmentVariable(\"TC5-tracking-id\", jsonData.id);",
+                  "postman.clearEnvironmentVariable('TC5-redemption-id');",
+                  "postman.clearEnvironmentVariable('TC5-customer-id');",
+                  "postman.clearEnvironmentVariable('TC5-rollback-redemption-id');"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/redemptions/{{TC5-redemption-id}}/rollback?reason=Fraud",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "_postman_id": "081e17a2-e073-61a8-4081-17bc728ea876",
+      "name": "TC6 - Campaign with Validation Rules",
+      "description": "",
+      "item": [
+        {
+          "_postman_id": "a3617f62-43a2-a3b7-d620-26d1bded0276",
+          "name": "TC6 - Create campaign",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Type is DISCOUNT VOUCHER\"] = jsonData.voucher.type === \"DISCOUNT_VOUCHER\";",
+                  "postman.setEnvironmentVariable(\"createdCampaignName\", jsonData.name);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/campaigns",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"TC6 - test campaign\",\n    \"start_date\": \"2016-09-26T00:00:00Z\",\n    \"expiration_date\": \"2020-12-26T00:00:00Z\",\n    \"type\": \"AUTO_UPDATE\",\n    \"vouchers_count\": 10,\n    \"voucher\": {\n        \"type\": \"DISCOUNT_VOUCHER\",\n        \"discount\": {\n            \"percent_off\": \"10.0\",\n            \"type\": \"PERCENT\"\n        },\n        \"redemption\": {\n          \"quantity\": 1\n        },\n        \"code_config\": {\n            \"pattern\": \"TC6-PROMO-#######\"\n        }\n    },\n    \"metadata\": {\n      \"test\": true\n    }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "2f219cb5-3f65-fecf-7247-b1d22b10152c",
+          "name": "TC6 - Create Product",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Product id is defined\"] = _.isUndefined(jsonData.id) === false;",
+                  "tests[\"Product type is 'product'\"] = jsonData.object === \"product\";",
+                  "postman.setEnvironmentVariable(\"createdProductId\", jsonData.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/products",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\" : \"Apple iPhone 7\",\n    \"source_id\" : \"internal_crm_id_{{$timestamp}}\",\n    \"attributes\": [ \"color\", \"memory\" ],\n    \"metadata\": {\n      \"test\": true\n    }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "669bfa04-7d5a-3375-912e-573b22ecc2de",
+          "name": "TC6 - Add SKU",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"SKU id is defined\"] = _.isUndefined(jsonData.id) === false;",
+                  "tests[\"SKU type is 'sku'\"] = jsonData.object === \"sku\";",
+                  "postman.setEnvironmentVariable(\"createdSKUId\", jsonData.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/products/{{createdProductId}}/skus",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"sku\" : \"APPLE_IPHONE_7\",\n    \"source_id\" : \"internal_erp_sku_id_{{$timestamp}}\",\n    \"currency\": \"USD\",\n    \"price\": 70000,\n    \"attributes\": {\n      \"color\": \"black\",\n      \"memory\": \"32\"\n    }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "04b44197-06b3-a744-1703-5efee281cdc3",
+          "name": "TC6 - Create Validation Rules",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"VR id is defined\"] = _.isUndefined(jsonData.id) === false;",
+                  "tests[\"VR type is 'validation_rules'\"] = jsonData.object === \"validation_rules\";",
+                  "postman.setEnvironmentVariable(\"createdValidationRulesId\", jsonData.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/validation-rules",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"campaign_name\" : \"{{createdCampaignName}}\",\n    \"junction\" : \"AND\",\n  \"skus\": {\n      \"junction\":\"AND\",\n      \"conditions\": {\n          \"$is\":[\n              { \"id\": \"{{createdSKUId}}\" }\n          ]\n      }\n  },\n  \"orders\": {\n    \"junction\":\"AND\",\n    \"total_amount\":null,\n    \"products_count\":{\n      \"$more_than\":[1]\n    }\n  }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "f465fa24-d15b-b3bf-b90e-196111778cfe",
+          "name": "TC6- Get Validation Rules",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"VR id is defined\"] = _.isUndefined(jsonData.id) === false;",
+                  "tests[\"VR type is 'validation_rules'\"] = jsonData.object === \"validation_rules\";",
+                  "postman.clearEnvironmentVariable('createdCampaignName');",
+                  "postman.clearEnvironmentVariable('createdValidationRulesId');",
+                  "postman.clearEnvironmentVariable('createdProductId');"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/validation-rules/{{createdValidationRulesId}}",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"campaign_name\" : \"{{createdCampaignName}}\",\n    \"junction\" : \"AND\",\n  \"skus\": {\n      \"junction\":\"AND\",\n      \"conditions\": {\n          \"$is\":[\n              { \"id\": \"{{createdSKUId}}\" }\n          ]\n      }\n  },\n  \"orders\": {\n    \"junction\":\"AND\",\n    \"total_amount\":null,\n    \"products_count\":{\n      \"$more_than\":[1]\n    }\n  }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "23c2673f-9b7f-4c33-d17c-637987f8ed35",
+          "name": "TC6 - Add voucher to campaign",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Type is DISCOUNT VOUCHER\"] = jsonData.voucher.type === \"DISCOUNT_VOUCHER\";",
+                  "postman.setEnvironmentVariable(\"createdCampaignName\", jsonData.name);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/campaigns/{{createdCampaignName}}/vouchers",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"metadata\": {\n      \"test\": true\n    }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "_postman_id": "937a00cc-5c74-195c-00c2-4b90f7e82c5b",
+      "name": "TC7 - referral program",
+      "description": "",
+      "item": []
+    },
+    {
+      "_postman_id": "ec8077b6-1d29-731a-107f-8059131c55dd",
+      "name": "TC8 - Segments API",
+      "description": "",
+      "item": []
+    },
+    {
+      "_postman_id": "9ff4656c-9a9b-dd07-8815-9d91c90ea9f6",
+      "name": "Validate",
+      "description": "",
+      "item": [
+        {
+          "_postman_id": "100943c3-84b1-1acc-836c-854ab46c2c55",
+          "name": "Validate",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Code is test\"] = jsonData.code === 'test';",
+                  "tests[\"Code is valid\"] = jsonData.valid === true;"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/test/validate",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"order\":{\n    \"amount\":1000\n  }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "447656e8-2a04-0be3-b270-347143fe6292",
+          "name": "Validate - expired",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Code is invalid\"] = jsonData.valid === false;",
+                  "tests[\"Reason is expired\"] = jsonData.reason === 'voucher expired';"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/invalid/validate",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "0ae5f891-e2cf-de12-4cb6-472539f692d8",
+          "name": "Validate - disabled",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Code is invalid\"] = jsonData.valid === false;",
+                  "tests[\"Reason is disabled\"] = jsonData.reason === 'voucher is disabled';"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/invalid-disabled/validate",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "21303ec2-0f03-84ad-2def-187e792dcfd4",
+          "name": "Validate - client side",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Code is valide\"] = jsonData.valid === true;",
+                  "tests[\"Tracking id is not empty\"] = jsonData.tracking_id.length > 0;"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "https://api.voucherify.io/client/v1/validate?code=test-3",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Client-Application-Id",
+                "value": "{{Client-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-Client-Token",
+                "value": "{{Client-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              },
+              {
+                "key": "Origin",
+                "value": "origin",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "7abf7492-36c9-5de9-cba8-ad83ab92bf05",
+          "name": "Validate - order details",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Code is valid\"] = jsonData.valid === true;"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/IzvHT3Ba/validate",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"customer\": {\n         \"id\": \"cust_eIH9UtbvIfRUP9nZyBqDeMEv\"\n    },\n    \"order\": {\n        \"items\": [\n            { \"product_id\": \"prod_anJ03RZZq74z4v\", \"quantity\": \"1\" }\n        ]\n    }\n}\n"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "33c16815-960f-7508-07f8-8a107c36eaf7",
+          "name": "Validate - order details skus",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Code is valid\"] = jsonData.valid === true;"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/LdprQtRL/validate",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"order\": {\n        \"items\": [\n          { \"sku_id\": \"sku_dSbRQfbyUMyHnt\", \"quantity\": \"1\" },\n            { \"sku_id\": \"sku_0KtP4rvwEECQ2U\", \"quantity\": \"1\" }\n        ]\n    }\n}\n"
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "_postman_id": "a3dabfdb-52de-8971-f1aa-4d59a29c4f50",
+      "name": "Validation rules",
+      "description": "",
+      "item": [
+        {
+          "_postman_id": "e512c5d7-6e0a-316e-59dd-22c06f248a3e",
+          "name": "Create",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"VR id is defined\"] = _.isUndefined(jsonData.id) === false;",
+                  "tests[\"VR type is 'validation_rules'\"] = jsonData.object === \"validation_rules\";",
+                  "postman.setEnvironmentVariable(\"createdValidationRulesId\", jsonData.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/validation-rules",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"voucher_code\" : \"val_rul_test\",\n  \"orders\": {\n      \"total_amount\": {\n        \"$more_than\":[10000]\n      }\n    }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "17b0556d-a2a7-f2ef-9f69-a3d94c07ae84",
+          "name": "Get",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/validation-rules/{{createdValidationRulesId}}",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"campaign_name\" : \"{{createdCampaignName}}\",\n    \"junction\" : \"AND\",\n  \"skus\": {\n      \"junction\":\"AND\",\n      \"conditions\": {\n          \"$is\":[\n              { \"id\": \"{{createdSKUId}}\" }\n          ]\n      }\n  },\n  \"orders\": {\n    \"junction\":\"AND\",\n    \"total_amount\":null,\n    \"products_count\":{\n      \"$more_than\":[1]\n    }\n  }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "fb4187cf-04cf-75bb-d3ac-e7c2000b577b",
+          "name": "Update",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/validation-rules/{{createdValidationRulesId}}",
+            "method": "PUT",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orders\": {\n      \"total_amount\": {\n        \"$more_than\":[5000]\n      }\n  }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "0be7374c-3d9f-5c88-1e29-90485842df70",
+          "name": "Delete",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "postman.clearEnvironmentVariable('createdValidationRulesId');"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/validation-rules/{{createdValidationRulesId}}",
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "_postman_id": "b314f6bc-544a-4bd2-1dd6-fbcbacd8e786",
+      "name": "Standalone2",
+      "description": "",
+      "item": [
+        {
+          "_postman_id": "da3b3562-1705-2ae8-a88a-c3833c64bb27",
+          "name": "Create voucher without code",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Type is DISCOUNT VOUCHER\"] = jsonData.type === \"DISCOUNT_VOUCHER\";",
+                  "tests[\"Code is not empty\"] = _.isEmpty(jsonData.code) !== true; ",
+                  "postman.setEnvironmentVariable(\"generatedCode\", jsonData.code);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"type\": \"DISCOUNT_VOUCHER\",\n    \"discount\": {\n        \"percent_off\": \"10.0\",\n        \"type\": \"PERCENT\"\n    },\n    \"redemption\": {\n        \"quantity\": \"1\" \n    },\n    \"category\": \"postman\"\n}"
+            },
+            "description": "Create discount voucher without code"
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "a62cb99f-e13c-7277-698d-205312dc7be5",
+          "name": "Create voucher with a given code",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Type is DISCOUNT VOUCHER\"] = jsonData.type === \"DISCOUNT_VOUCHER\";",
+                  "tests[\"Code is not empty\"] = jsonData.code == request.url.substr(request.url.lastIndexOf('/') + 1); ",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/{{$timestamp}}",
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"type\": \"DISCOUNT_VOUCHER\",\n    \"discount\": {\n        \"percent_off\": \"10.0\",\n        \"type\": \"PERCENT\"\n    },\n    \"redemption\": {\n        \"quantity\": \"1\" \n    },\n    \"category\": \"postman\"\n}"
+            },
+            "description": "Create discount voucher with a given code"
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "7f455b80-d2a4-e768-a960-987fd7d72819",
+          "name": "Update voucher",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Metadata got updated\"] = jsonData.metadata['update_time'] === JSON.parse(request.data).metadata.update_time;",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/test",
+            "method": "PUT",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"metadata\": {\n        \"update_time\": \"{{$timestamp}}\" \n    },\n    \"category\": \"postman\"\n}"
+            },
+            "description": "Update voucher metadata"
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "9a9fb5c8-9754-07a5-74c4-c549ba3add7e",
+          "name": "Get voucher - existing",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"Category is postman\"] = jsonData.category === 'postman';",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/test",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"metadata\": {\n        \"update_time\": \"{{$timestamp}}\" \n    }\n}"
+            },
+            "description": "Get existing voucher"
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "ac56a24d-a45b-df73-9aa1-c4bdf70882b4",
+          "name": "Get voucher - non-existent",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 404\"] = responseCode.code === 404",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/notfound123",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"metadata\": {\n        \"update_time\": \"{{$timestamp}}\" \n    }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "2c839e48-1f60-0f71-85ba-b8b542d09eb9",
+          "name": "List vouchers",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "_.forEach(jsonData, function(voucher) { ",
+                  "    tests[`Category is for voucher: ${voucher.code} is postman`] = voucher.category === 'postman';",
+                  "});",
+                  "tests[\"Number of vouchers is less 3\"] = jsonData.length <= 3; "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers?category=postman&limit=3",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"metadata\": {\n        \"update_time\": \"{{$timestamp}}\" \n    }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "616b7fcb-9b73-3721-170f-fbdcf2399712",
+          "name": "List vouchers - paging",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200",
+                  "var jsonData = JSON.parse(responseBody);",
+                  "tests[\"9/10 code is LEdM2MEK\"] = jsonData[0].code === \"LEdM2MEK\";",
+                  "tests[\"10/10 code is s21dBglt\"] = jsonData[1].code === \"s21dBglt\";"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers?campaign=postman-paging&limit=2&skip=8",
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"metadata\": {\n        \"update_time\": \"{{$timestamp}}\" \n    }\n}"
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "cda05a62-8a4e-5aca-f073-0f8c785028d4",
+          "name": "Delete voucher",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "tests[\"Status code is 200\"] = responseCode.code === 200;",
+                  "postman.clearEnvironmentVariable(\"{{generatedCode}}\");",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "url": "{{url}}/vouchers/{{generatedCode}}",
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-App-Id",
+                "value": "{{X-App-Id}}",
+                "description": ""
+              },
+              {
+                "key": "X-App-Token",
+                "value": "{{X-App-Token}}",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
